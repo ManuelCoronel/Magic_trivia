@@ -1,0 +1,76 @@
+{%extends 'base.html'%}
+{%load static%}
+{% block body %}
+
+
+<header id="header">
+    <div class="container-fluid">
+
+      <div id="logo" class="pull-left">
+        <h1><a href="#intro" class="scrollto">Magic Trivia</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-has-children"><a href="{% url 'home'%}">Ranking</a></li>
+         <li class="menu-has-children"><a href="">Welcome {{username}}</a>
+            <ul>
+              <li><a href="#">Profile</a></li>
+
+            </ul>
+          </li>
+        
+        </ul>
+        
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+  <section id="intro" style="background-image: url('{% static 'img/intro-carousel/13.jpg' %}'); background-repeat:no-repeat;   background-attachment: fixed;background-size: 100% 100%;">
+
+    <form action="{% url 'questions'%}" style='margin-top:10%'>
+    <div class="container mt-2" style='font-family:sans-serif;color:black;font-size:30px '>
+        <div class="row" style="text-align:center">
+          <div class="col-sm" style="text-align-center: left; margin:0px 0px 0px 0px; ">
+            <p>Category</p>
+              <select class="form-select" name='category' style=" border-radius: 30px; font-size:25px;" >
+                    
+                <option selected value=0>Any Category</option>
+               
+                {% for categories in category %}
+                <option value='{{categories.id}}'>{{categories.name}}</option>
+                {% endfor %}
+              </select>
+          </div>
+          <div class="col-sm">
+           <p>Difficulty<p>
+            <select class="form-select" name='difficulties' style="border-radius: 30px; font-size:25px" aria-label="Default select example">
+                <option selected value=0>Any Difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+          </div>
+          <div class="col-sm">
+            <p># Questions<p>
+                <select class="form-select" name='num_question' style="border-radius: 30px; font-size:25px" aria-label="Default select example">
+                    <option selected value=1>1</option>
+                    {% for i in myrange%}
+                    <option value={{i}}>{{i}}</option>
+                    {% endfor %}
+                  </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      
+      <div style=" text-align:center ; ">
+      <button type="submit"  style="font-size:25px; border-radius: 40px;" class="btn btn-success align-center">Ready</button>
+      </div>
+    </form>
+  
+  </section><!-- #intro -->
+
+  
+{% endblock%}
