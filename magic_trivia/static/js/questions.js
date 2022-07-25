@@ -1,5 +1,6 @@
 const API_URL = "questions.json";
 let questions =  [];
+let score_question = []
 let currentQuestion = 0;
 let score = 0;
 
@@ -40,7 +41,8 @@ function renderQuestion() {
 
 function anterior() {
     if (currentQuestion > 0) {
-      //  renderQuestion(questions[--currentQuestion]);
+        --currentQuestion
+        renderQuestion();
     } else {
         alert("No puedes retroceder");
     }
@@ -48,18 +50,36 @@ function anterior() {
 
 function siguiente() {
     if (currentQuestion < questions.length - 1) {
-      //  checkAnswer();
+        checkAnswer();
         ++currentQuestion
        renderQuestion();
     } else {
+        console.log(currentQuestion)
+        checkAnswer();
+        totalScore()
         alert("Terminaste " + score);
     }
+}
+function totalScore(){
+    score = 0
+    console.log("SCOREE")
+    console.log(score_question)
+    for (var i = 0; i < questions.length;i++){
+        score += score_question[i]
+        
+    }
+
 }
 
 function checkAnswer() {
     let answer = document.querySelector('input[name="pregunta1"]:checked').value;
-    if (answer == questions[currentQuestion].answer) {
-        score++;
+    console.log(answer)
+    console.log(questions[currentQuestion].correct_answer)
+    if (answer == questions[currentQuestion].correct_answer) {
+        score_question[currentQuestion] = 1
+        console.log("BIENNN")
+    }else{
+          score_question[currentQuestion] = 0
     }
 }
 
@@ -74,11 +94,14 @@ function htmlDecode(input) {
   
 
 function main() { 
+    score = 0
     questions = document.getElementById("questionsList").innerHTML;
     questions = JSON.parse(questions.replaceAll("'","\""))
 
     for (let i = 0; i < questions.length; i++) {
         questions[i].question = htmlDecode(questions[i].question) 
+        questions[i].correct_answer = htmlDecode(questions[i].correct_answer) 
+        score_question[i] = 0
         console.log(htmlDecode(questions[i].question) )
         for(let j =0;j < questions[i].incorrect_answers.length; j++) {
             questions[i].incorrect_answers[j] = htmlDecode(questions[i].incorrect_answers[j])
@@ -90,10 +113,7 @@ function main() {
   //console.log(typeofquestions)
     if (currentQuestion == 0) {
          renderQuestion();
-    } else {
- //       cargeQuestions();
     }
-   
 }
 
 
