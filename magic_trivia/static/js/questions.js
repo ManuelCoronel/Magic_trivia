@@ -3,37 +3,51 @@ let questions =  [];
 let score_question = []
 let currentQuestion = 0;
 let score = 0;
-
+let url1 = ""
+let url2 = ""
 
 function renderQuestion() {
     let card = "";
     card += /*html*/ `
-    <div class="card-header">
-        <h4 class="card-title">${questions[currentQuestion].category}</h4>
+    <div class="container"  >
+        <div class="row justify-content-center" style="text-align: center;" >
+            <div class="col-10" style=" padding: 20px 40px; border-radius: 40px; background-image: url('${url1}');   background-position: center;background-size:cover; background-repeat:no-repeat" >
+             <h4 style="font-size:2.6rem; margin:10px 0px;"><b>${questions[currentQuestion].category}</b></h4>
+            <p class="card-text"  style="font-size:2rem;">  ${questions[currentQuestion].question}</p>
+        </div>
     </div>
-    <div class="card-body">
+    </div>
+    <div class="container" style="margin:100px 0">
+    <div class="row justify-content-center" style="font-size:1.5rem;">
      
-        <p class="card-text">${questions[currentQuestion].question}.</p>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[0]}." id="pregunta1">
-            <label class="form-check-label" for="pregunta1">${questions[currentQuestion].incorrect_answers[0]}</label>
+     
+        <div class="col-4  form-check"  style=" margin: 50px 40px; padding: 30px 120px ; border-radius: 40px; background-image: url('${url2}');   background-position: center;background-size:cover; background-repeat:no-repeat">
+            <input class="form-check-input " type="radio" style=" width:20px;height:20px";  name="pregunta1" value="${questions[currentQuestion].incorrect_answers[0]}" id="pregunta1">
+            <label class="form-check-label " style="padding: 0px 20px" for="pregunta1">${questions[currentQuestion].incorrect_answers[0]}</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[1]}" id="pregunta2">
-            <label class="form-check-label" for="pregunta2">${questions[currentQuestion].incorrect_answers[1]}</label>
+        <div class=" col-4 offset-2 form-check"  style=" margin: 50px 40px; padding: 30px 120px ; border-radius: 40px; background-image: url('${url2}');   background-position: center;background-size:cover; background-repeat:no-repeat">
+            <input class="form-check-input"  type="radio"  style=" width:20px;height:20px"; name="pregunta1" value="${questions[currentQuestion].incorrect_answers[1]}" id="pregunta2">
+            <label class="form-check-label" style="padding: 0px 20px" for="pregunta2">${questions[currentQuestion].incorrect_answers[1]}</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[2]}" id="pregunta3">
-            <label class="form-check-label" for="pregunta3">${questions[currentQuestion].incorrect_answers[2]}</label>
+        <div class=" col-4  form-check"  style=" margin: 50px 40px; ; padding: 30px 120px ; border-radius: 40px; background-image: url('${url2}');   background-position: center;background-size:cover; background-repeat:no-repeat">
+            <input class="form-check-input" type="radio"  style=" width:20px;height:20px"; name="pregunta1" value="${questions[currentQuestion].incorrect_answers[2]}" id="pregunta3">
+            <label class="form-check-label" style="padding: 0px 20px" for="pregunta3">${questions[currentQuestion].incorrect_answers[2]}</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[3]}" id="pregunta4">
-            <label class="form-check-label" for="pregunta4">${questions[currentQuestion].incorrect_answers[3]}</label>
+        <div class=" col-4  form-check"  style=" margin: 50px 40px; ; padding: 30px 120px ; border-radius: 40px; background-image: url('${url2}');   background-position: center;background-size:cover; background-repeat:no-repeat">
+        <input class="form-check-input" type="radio"  style=" width:20px;height:20px"; name="pregunta1" value="${questions[currentQuestion].incorrect_answers[3]}" id="pregunta4">
+        <label class="form-check-label" style="padding: 0px 20px" for="pregunta4">${questions[currentQuestion].incorrect_answers[3]}</label>
+    </div>
         </div>
     </div>
-    <div class="card-footer">
-        <button type="button" class="btn btn-primary" id="btn_pregunta1" onclick="anterior()">Anterior</button>
-        <button type="button" class="btn btn-primary" id="btn_pregunta2" onclick="siguiente()">Siguiente</button>
+    <div class="card-footer container">
+    <div class="row">
+        <div class="col-2 offset-4" >
+        <button type="button" class="btn btn-primary" id="btn_pregunta1" onclick="anterior()"  style="color:black; padding: 20px 40px; border-radius: 40px; background-image: url('${url1}');   background-position: center;background-size:cover; background-repeat:no-repeat">Anterior</button>
+        </div>
+        <div class="col-2 ">
+        <button type="button" class="btn btn-primary" id="btn_pregunta2" onclick="siguiente()"style="color:black; padding: 20px 40px; border-radius: 40px; background-image: url('${url1}');   background-position: center;background-size:cover; background-repeat:no-repeat">Siguiente</button>
+        </div>
+        </div>
     </div>
     `;
     document.getElementById("card_question").innerHTML = card;
@@ -93,8 +107,10 @@ function htmlDecode(input) {
   }
   
 
-function main() { 
+function main(urlh1,urlh2) { 
     score = 0
+    url1 = urlh1
+    url2 = urlh2
     questions = document.getElementById("questionsList").innerHTML;
     questions = JSON.parse(questions.replaceAll("'","\""))
 
