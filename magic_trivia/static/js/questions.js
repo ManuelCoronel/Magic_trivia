@@ -1,34 +1,33 @@
 const API_URL = "questions.json";
-let questions = [];
+let questions =  [];
 let currentQuestion = 0;
 let score = 0;
 
-renderQuestion(questions)
 
-function renderQuestion(question) {
+function renderQuestion() {
     let card = "";
     card += /*html*/ `
     <div class="card-header">
-        <h4 class="card-title">${question.category}</h4>
+        <h4 class="card-title">${questions[currentQuestion].category}</h4>
     </div>
     <div class="card-body">
-        <h6 class="card-title">Pregunta ${currentQuestion}.</h6>
-        <p class="card-text">${question.question}</p>
+     
+        <p class="card-text">${questions[currentQuestion].question}.</p>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${question.options[0]}" id="pregunta1">
-            <label class="form-check-label" for="pregunta1">${question.options[0]}</label>
+            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[0]}." id="pregunta1">
+            <label class="form-check-label" for="pregunta1">${questions[currentQuestion].incorrect_answers[0]}</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${question.options[1]}" id="pregunta2">
-            <label class="form-check-label" for="pregunta2">${question.options[1]}</label>
+            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[1]}" id="pregunta2">
+            <label class="form-check-label" for="pregunta2">${questions[currentQuestion].incorrect_answers[1]}</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${question.options[2]}" id="pregunta3">
-            <label class="form-check-label" for="pregunta3">${question.options[2]}</label>
+            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[2]}" id="pregunta3">
+            <label class="form-check-label" for="pregunta3">${questions[currentQuestion].incorrect_answers[2]}</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="pregunta1" value="${question.options[3]}" id="pregunta4">
-            <label class="form-check-label" for="pregunta4">${question.options[3]}</label>
+            <input class="form-check-input" type="radio" name="pregunta1" value="${questions[currentQuestion].incorrect_answers[3]}" id="pregunta4">
+            <label class="form-check-label" for="pregunta4">${questions[currentQuestion].incorrect_answers[3]}</label>
         </div>
     </div>
     <div class="card-footer">
@@ -41,7 +40,7 @@ function renderQuestion(question) {
 
 function anterior() {
     if (currentQuestion > 0) {
-        renderQuestion(questions[--currentQuestion]);
+      //  renderQuestion(questions[--currentQuestion]);
     } else {
         alert("No puedes retroceder");
     }
@@ -49,8 +48,9 @@ function anterior() {
 
 function siguiente() {
     if (currentQuestion < questions.length - 1) {
-        checkAnswer();
-        renderQuestion(questions[++currentQuestion]);
+      //  checkAnswer();
+        ++currentQuestion
+       renderQuestion();
     } else {
         alert("Terminaste " + score);
     }
@@ -67,13 +67,33 @@ function existsQuestions() {
     return !!localStorage.getItem('questions');
 }
 
-function main() {
-    if (existsQuestions()) {
-        questions = JSON.parse(localStorage.getItem('questions'));
-    } else {
-        cargeQuestions();
+function htmlDecode(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
+  }
+  
+
+function main() { 
+    questions = document.getElementById("questionsList").innerHTML;
+    questions = JSON.parse(questions.replaceAll("'","\""))
+
+    for (let i = 0; i < questions.length; i++) {
+        questions[i].question = htmlDecode(questions[i].question) 
+        console.log(htmlDecode(questions[i].question) )
+        for(let j =0;j < questions[i].incorrect_answers.length; j++) {
+            questions[i].incorrect_answers[j] = htmlDecode(questions[i].incorrect_answers[j])
+        }
+        
     }
-    renderQuestion(questions[currentQuestion]);
+    console.log(questions[0].question);
+    console.log(questions);
+  //console.log(typeofquestions)
+    if (currentQuestion == 0) {
+         renderQuestion();
+    } else {
+ //       cargeQuestions();
+    }
+   
 }
 
-main();
+

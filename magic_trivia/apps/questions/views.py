@@ -2,6 +2,7 @@ from django.shortcuts import render
 import requests
 from django.views.generic import TemplateView
 import random
+import json
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -47,14 +48,14 @@ def clear_questions(questions):
     for question in questions:
         n = random.randint(0,3)
         question['incorrect_answers'].insert(n,question['correct_answer'])
-        return questions
+    return questions
 
 def load_questions(request):
     print("Bien")
     questions = get_questions(request)
     template_name = 'questions.html'
     
-    return render (request,template_name,{'questions':questions} )
+    return render (request,template_name,{'questions':json.dumps(questions)} )
 
 class home(TemplateView):
     template_name = "index.html"
