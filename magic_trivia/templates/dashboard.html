@@ -30,11 +30,11 @@
   <section id="intro" style="background-image: url('{% static 'img/intro-carousel/13.jpg' %}'); background-repeat:no-repeat;   background-attachment: fixed;background-size: 100% 100%;">
 
     <form action="{% url 'questions'%}" style='margin-top:10%'>
-    <div class="container mt-2" style='font-family:sans-serif;color:black;font-size:30px '>
+    <div class="container mt-2" style='font-family:sans-serif;color:black; '>
         <div class="row" style="text-align:center">
           <div class="col-sm" style="text-align-center: left; margin:0px 0px 0px 0px; ">
             <p >Category</p>
-              <select class="form-select" name='category' style=" border-radius: 30px; font-size:25px;" >
+              <select class="form-select" name='category' style=" border-radius: 30px; font-size:1.4rem" >
                     
                 <option selected value=0 >Any Category</option>
                
@@ -45,7 +45,7 @@
           </div>
           <div class="col-sm">
            <p>Difficulty<p>
-            <select class="form-select" name='difficulties' style="border-radius: 30px; font-size:25px" aria-label="Default select example">
+            <select class="form-select" name='difficulties' style="border-radius: 30px; font-size:1.4rem" aria-label="Default select example">
                 <option selected value=0>Any Difficulty</option>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -54,7 +54,7 @@
           </div>
           <div class="col-sm">
             <p># Questions<p>
-                <select class="form-select" name='num_question' style="border-radius: 30px; font-size:25px" aria-label="Default select example">
+                <select class="form-select" name='num_question' style="border-radius: 30px; font-size:1.3rem" aria-label="Default select example">
                     <option selected value=1>1</option>
                     {% for i in myrange%}
                     <option value={{i}}>{{i}}</option>

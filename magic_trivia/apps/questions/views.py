@@ -3,8 +3,25 @@ import requests
 from django.views.generic import TemplateView
 import random
 import json
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from .Serializers import correct_answer_serializer
+
 # Create your views here.
+
+def validate_question(request):
+    print("Hellooooo")
+    print(request.body)
+    print("despues")
+    answers = correct_answer_serializer(data = json.loads(request.body))
+
+    if answers.is_valid() :
+        print(answers.data)
+    else :
+        print(answers.errors)
+    
+    return HttpResponse()
 
 def get_category():
     api_url = 'https://opentdb.com/api_category.php'
@@ -19,10 +36,7 @@ def load_dashboard(request):
     myrange = list(range(5,51,5))
     return render (request,template_name,{'category':category, 'myrange':myrange, 'username':request.user.username} )
 
-def get_token():
-    api_url = 'https://opentdb.com/api_token.php?command=request'
-    response = requests.get(api_url)
-    return response.json()['token']
+
 
 def get_questions(request):
     
@@ -35,12 +49,11 @@ def get_questions(request):
         api_url = api_url +'&category='+category
     if difficulty != '0' :
         api_url = api_url +'&difficulty='+difficulty
-    token = get_token()
-    api_url = api_url +"&type=multiple&token="+token
+    api_url = api_url +"&type=multiple&token="+request.session['token']
     print("here")
     print(api_url)
     response = requests.get(api_url)    
-    print(response.json()['results'])
+
     
     return clear_questions(response.json()['results'])
 
@@ -55,7 +68,11 @@ def load_questions(request):
     questions = get_questions(request)
     template_name = 'questions.html'
     
-    return render (request,template_name,{'questions':json.dumps(questions)} )
+    return render (request,template_name,{'questions':questions} )
+
+class game_over(TemplateView):
+    template_name = "game_over.html"
+
 
 class home(TemplateView):
     template_name = "index.html"

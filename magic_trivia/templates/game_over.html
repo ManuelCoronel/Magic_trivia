@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+
+{%load static%}
+
+{% block body %}
+<script src='{% static "js/questions.js" %}'></script>
+
+<header id="header">
+    <div class="container-fluid">
+
+      <div id="logo" class="pull-left">
+        <h1><a href="#intro" class="scrollto">Magic Trivia</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-has-children"><a href="{% url 'home'%}">Ranking</a></li>
+         <li class="menu-has-children"><a href="">Welcome {{username}}</a>
+            <ul>
+              <li><a href="#">Profile</a></li>
+
+            </ul>
+          </li>
+        
+        </ul>
+        
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+        <video autoplay muted loop id="myVideo" style ="  min-width: 100%; min-height: 100%; ">
+            <source src='{% static "media/fireworks.mp4" %}'type="video/mp4">
+          </video>
+    <main>
+     
+    
+        <div class="container mt-5" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="card_question"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <audio controls autoplay hidden>
+        <source src="{% static 'media/Medieval.mp3' %}" type="audio/mpeg">
+    
+      </audio>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+{%endblock%}
