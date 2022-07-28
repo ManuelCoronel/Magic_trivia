@@ -8,5 +8,6 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = [] # removes email from REQUIRED_FIELDS
     best_score = models.IntegerField(default=0)
     num_matches = models.IntegerField(default=0)
+    num_questions = models.IntegerField(default=0)
 
 
