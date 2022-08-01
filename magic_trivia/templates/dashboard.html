@@ -25,7 +25,12 @@
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
-  <section id="intro" style="background-image: url('{% static 'img/intro-carousel/13.jpg' %}'); background-repeat:no-repeat;   background-attachment: fixed;background-size: 100% 100%;">
+  <section id="intro">
+
+    <video autoplay muted loop id="myVideo" style ="  min-width: 100%; min-height: 100%; position:fixed;">
+      <source src='{% static "media/galaxy.mp4" %}'type="video/mp4">
+    </video>
+
 
     <form action="{% url 'questions'%}" style='padding-top:200px'>
     <div class="container mt-2" style='font-family:sans-serif;color:black; font-size: calc(15px + 0.390625vw) '>
@@ -63,12 +68,15 @@
       </div>
       <br>
       
-      <div style=" text-align:center ; ">
+      <div class="col" style=" text-align:center ; ">
       <button type="submit"  style="font-size: calc(15px + 0.390625vw); border-radius: 40px;" class="btn btn-success align-center">Ready</button>
       </div>
     </form>
   
   </section><!-- #intro -->
 
-  
+  <audio controls autoplay hidden>
+    <source src="{% static 'media/world.mp3' %}" type="audio/mpeg">
+
+  </audio>
 {% endblock%}
