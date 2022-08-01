@@ -4,6 +4,7 @@ from apps.users.models import CustomUser
 from django.views.generic import TemplateView, ListView
 import random,html
 import json
+import time
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -109,6 +110,7 @@ def game_over(request):
     template = "game_over.html"
     queryset = CustomUser.objects.values_list("username","best_score","num_questions","num_matches").order_by('-best_score',"num_questions","num_matches")
     print("Lista ",queryset)
+    time.sleep(2)
     score = request.session['score']
     questions = len(request.session['questions'])
     return render (request,template,{"users":queryset,"score":score,"questions":questions})
