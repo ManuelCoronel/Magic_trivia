@@ -139,9 +139,10 @@ function finish(){
       body: JSON.stringify(data)
     }).then(res => {
       console.log("Request complete! response:", res);
+      location.href="/questions/game_over"
     });
 
-    location.href="/questions/game_over"
+   
 
 }
 
