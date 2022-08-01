@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import requests
-from django.views.generic import TemplateView
+from apps.users.models import CustomUser
+from django.views.generic import TemplateView, ListView
 import random,html
 import json
 from django.http import HttpResponse
@@ -13,16 +14,19 @@ from .Serializers import correct_answer_serializer
 def validate_question(request):
 
     score = get_score(request)
+    request.session['score'] = score
+    print("score",score)
     user = request.user
     if score >= user.best_score:
         if score == user.best_score:
             if len(request.session['questions']) < user.num_questions:
                 user.num_questions = len(request.session['questions'])
-                user.save()
-            else :
-                user.best_score = score
-                user.num_questions = len(request.session['questions'])
-                user.save()
+                
+        else :
+            user.best_score = score
+            user.num_questions = len(request.session['questions'])
+    user.num_matches = user.num_matches + 1    
+    user.save()
     
 
     
@@ -35,7 +39,7 @@ def get_score(request):
     score = 0
     if answers.is_valid() :
         questions = request.session['questions']
-
+        print(questions)
         for i in range(0,len(questions)):
             print("i = ",i)
             print(html.unescape(questions[i]['correct_answer']))
@@ -80,27 +84,35 @@ def get_questions(request):
     print("here")
     print(api_url)
     response = requests.get(api_url)    
-
+    request.session['questions'] = response.json()['results'].copy()
     
-    return clear_questions(response.json()['results'])
+    return clear_questions(request,response.json()['results'])
 
-def clear_questions(questions):
+def clear_questions(request,questions):
+    
+    print("PREGUNTAS CARGADAS A LA SESION",request.session['questions'])
     for question in questions:
         n = random.randint(0,3)
         question['incorrect_answers'].insert(n,question['correct_answer'])
+        question['correct_answer'] = "none"  
+    print(request.session['questions'])
     return questions
 
 def load_questions(request):
     print("Bien")
     questions = get_questions(request)
-    request.session['questions'] = questions
-
     template_name = 'questions.html'
     
     return render (request,template_name,{'questions':questions} )
 
-class game_over(TemplateView):
-    template_name = "game_over.html"
+def game_over(request):
+    template = "game_over.html"
+    queryset = CustomUser.objects.values_list("username","best_score","num_questions","num_matches").order_by('-best_score',"num_questions","num_matches")
+    print("Lista ",queryset)
+    score = request.session['score']
+    questions = len(request.session['questions'])
+    return render (request,template,{"users":queryset,"score":score,"questions":questions})
+
 
 
 class home(TemplateView):

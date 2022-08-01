@@ -7,5 +7,5 @@ urlpatterns = [
     path('dashboard/', load_dashboard,name='dashboard'),
     path('questions/', load_questions,name='questions'),
     path('questions/validate/', validate_question,name='validate_question'),
-    path('questions/game_over/', game_over.as_view(),name='game_over'),
+    path('questions/game_over/', game_over,name='game_over'),
 ]

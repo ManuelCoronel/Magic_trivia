@@ -16,10 +16,10 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-has-children"><a href="{% url 'home'%}">Ranking</a></li>
+
          <li class="menu-has-children"><a href="">Welcome {{username}}</a>
             <ul>
-              <li><a href="#">Profile</a></li>
+              
               <li><a href="{% url 'logout' %}">Logout</a></li> 
             </ul>
           </li>
@@ -30,19 +30,42 @@
     </div>
   </header><!-- #header -->
 
-        <video autoplay muted loop id="myVideo" style ="  min-width: 100%; min-height: 100%; ">
+        <video autoplay muted loop id="myVideo" style ="  min-width: 100%; min-height: 100%; position:fixed;">
             <source src='{% static "media/fireworks.mp4" %}'type="video/mp4">
           </video>
-    <main>
-     
-    
-        <div class="container mt-5" >
+       
+          <div class="container" >  
+            <div class="col-md-12" style=" padding-top:250px; text-align: center; padding-top:150px; color:white; font-size:3.5rem">Score : {{score}}/{{questions}}</div>  
+            <div class="col-md-12" style=" padding-top:250px; text-align: center; padding-top:100px; color:white; font-size:2.5rem">Ranking</div>  
             <div class="row">
-                <div class="col-md-12">
-                    <div id="card_question"></div>
+                <div class="col-md-12" style="padding: 50px 0px 0px 0px ; text-align: center; color: white;">
+                  <table class="table">
+                    <tr style="padding: 50px">
+                      <th>User</th>
+                      <th>Best score</th>
+                      <th># Matches</th>
+                    </tr>
+                    {% for user in  users %}
+                  <tr>
+                    <td>{{user.0}}</td>
+                    <td>{{user.1}}/{{user.2}}</td>
+                    <td>{{user.3}}</td></tr>
+                    {%endfor%}
+                  </table>
                 </div>
+                <div class="col-md-12" style=" padding-top:250px; text-align: center; padding-top:70px; color:white; font-size:3.5rem">
+          
+                 <a href="{% url 'dashboard' %}"> <button type="button" class="btn btn-success" style="border-radius: 40px;" class=" btn-get-started scrollto">Play again</button></a>
+          
+                </div>  
             </div>
         </div>
+       
+        
+    <main>
+   
+  
+
     </main>
     <audio controls autoplay hidden>
         <source src="{% static 'media/Medieval.mp3' %}" type="audio/mpeg">

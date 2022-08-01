@@ -34,22 +34,25 @@ function convertMsToTime(milliseconds) {
 function renderQuestion() {
     let card = "";
     card += /*html*/ `
-    <div class="container"  >
+    <div class="container">
         <div class="row justify-content-center" style="text-align: center;" >
             <div class="col-10" style=" padding: 20px 40px; border-radius: 40px; background-image: url('${url_image_question}');   background-position: center;background-size:cover; background-repeat:no-repeat" >
-             <h4 style="font-size:2.6rem; margin:10px 0px;"><b>${htmlDecode(questions[currentQuestion].category)}</b></h4>
-            <p class="card-text"  style="font-size:2rem;">  ${htmlDecode(questions[currentQuestion].question)}</p>
+             <h4 style="margin:10px 0px;"><b>${htmlDecode(questions[currentQuestion].category)}</b></h4>
+            <p class="card-text">  ${htmlDecode(questions[currentQuestion].question)}</p>
         </div>
     </div>
     </div>
     <div class="container" style="margin:80px 0px 40px 0px">
-    <div class="row justify-content-center" style="font-size:1.5rem;">`;
-
+    <div class="row justify-content-center">`;
+    offset = 0;
      for (let i = 0; i < questions[currentQuestion].incorrect_answers.length; i++) {
+         if (i== 1 || i == 3){offset = 2}else{offset = 0}
         card += `
-        <div class="col-4  form-check"  style=" margin: 50px 40px;padding:30px 0px 30px 30px; border-radius: 40px; background-image: url('${url_image_answer}');   background-position: center;background-size:cover; background-repeat:no-repeat">
-        <input class="form-check-input " type="radio" style=" width:20px;height:20px";  name="pregunta1" value="${htmlDecode(questions[currentQuestion].incorrect_answers[i])}" id="pregunta${i+1}">
-        <label class="form-check-label " style="padding: 0px 20px ;" for="pregunta${i+1}">${htmlDecode(questions[currentQuestion].incorrect_answers[i])}</label>
+        <div class="col-4 offset-${offset}"  style="border-radius: 20px;margin-top:20px ;background-image: url('${url_image_answer}');   background-position: center;background-size:cover; background-repeat:no-repeat">
+        <div class="form-check" style="padding:20px 20px 20px 10px;">
+        <input class="form-check-input" type="radio"  style="padding-top:10px" name="pregunta1" value="${htmlDecode(questions[currentQuestion].incorrect_answers[i])}" id="pregunta${i+1}">
+        <label class="form-check-label" style=" " for="pregunta${i+1}">${htmlDecode(questions[currentQuestion].incorrect_answers[i])}</label>
+        </div>
         </div>
         `;
      }
@@ -66,20 +69,28 @@ function draw_options(){
     style = "";
     col = "";
 
+    card = `
+    <div class="">
+            <div class="row justify-content-center">
+           
+`;  
+
     if (currentQuestion == 0){
         style = "hidden"
-        col = "1"
+        col = "0"
     }else{
         col="2"
+        style="visible"
+        
+    card += `
+    <div class="col-md-${col}  ${style}  " style="visibility:${style}; text-align:center; margin-top:25px;">
+<button type="button" class="btn btn-primary" id="btn_pregunta1" onclick="go_back()"  style="color:black; padding: 20px 40px; border-radius: 40px; background-image: url('${url_image_question}');   background-position: center;background-size:cover; background-repeat:no-repeat">Back</button>
+ </div>
+           
+`;  
     }
-    card = `
 
-     <div class="card-footer container">
-            <div class="row">
-                <div class="col-sm-${col} offset-4" >
-                <button type="button" class="btn btn-primary" id="btn_pregunta1" onclick="go_back()"  ${style} style="color:black; padding: 20px 40px; border-radius: 40px; background-image: url('${url_image_question}');   background-position: center;background-size:cover; background-repeat:no-repeat">Back</button>
-            </div>
-`;
+
 
     if (currentQuestion < questions.length - 1){
         function_name = "go_next()";
@@ -90,8 +101,8 @@ function draw_options(){
 
     }
     card += `
-            <div class="col-sm-2">
-             <button type="button" class="btn btn-primary" id="btn_pregunta2" onclick="${function_name}"style="color:black; padding: 20px 40px; border-radius: 40px; background-image: url('${url_image_question}');   background-position: center;background-size:cover; background-repeat:no-repeat">${label}</button>
+            <div class="col-sm-2" style="text-align:center;  margin-top:25px;">
+             <button type="button" class="btn btn-primary" id="btn_pregunta2" onclick="${function_name}"style="color:black; padding: 20px 40px;  border-radius: 40px; background-image: url('${url_image_question}');   background-position: center;background-size:cover; background-repeat:no-repeat">${label}</button>
         </div>
     </div>
     </div>
