@@ -265,7 +265,7 @@
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" name = "password" id="password" placeholder="Password"required>
-          </div>              <small id="emailHelp" class="form-text text-muted text-right">I don't have an account. Click here.</small><br>
+          </div>            <a href="#" data-toggle="modal" data-target="#exampleModal2" > <small id="emailHelp" class="form-text text-muted text-right"><b> I don't have an account. Click here.</b></small><br></a>
           <div class= 'text-center t-3' >
              <button type="submit" class="btn btn-primary">Login</button>
 
@@ -277,6 +277,49 @@
     </div>
   </div>
 </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color:black"; center id="exampleModalLabel">Register</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div  style="color:black" class="modal-body m-3">
+            <form action="account/register/" method="post">  {% csrf_token %}
+              <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input class="form-control" name= "username" id="username" aria-describedby="emailHelp" placeholder="Enter username"required>
+                
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" name= "email" id="email" aria-describedby="emailHelp" placeholder="Enter email"required>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" name = "password" id="password" placeholder="Password"required>
+              </div>         <br>
+              <div class= 'text-center t-3' >
+                 <button type="submit" class="btn btn-primary">Sign in</button>
+    
+              </div>
+          
+            </form>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+
+
     <div class="container">
       <div class="copyright">
         &copy; Copyright <strong>BizPage</strong>. All Rights Reserved

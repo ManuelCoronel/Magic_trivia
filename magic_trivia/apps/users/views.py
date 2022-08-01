@@ -21,12 +21,25 @@ def login_view(request):
         return redirect('dashboard')
     else :
         print("Autenticado incorrectamente")
+        return redirect('home')
 
 
 def logout_view(request):
     logout(request)
     return redirect('home')
     
+
+def register(request):
+    username = request.POST['username']
+    email = request.POST['email']
+    password = request.POST['password']
+    user = CustomUser.objects.create_user(username=username, email=email, password=password)
+    login(request,user)
+    request.session['token'] = get_token()
+    return redirect('dashboard')
+
+
+
 def get_token():
     api_url = 'https://opentdb.com/api_token.php?command=request'
     response = requests.get(api_url)
