@@ -6,7 +6,6 @@ COPY /magic_trivia/requirements.txt requirements.txt
 
 RUN pip3 install -r requirements.txt
 
-ENV django-key django-insecure-w_nf2*3!@c3gc=owm&0gqnsid87yfc2(g2+#qc$yy#-@c7i12e
 COPY . .
 
 
